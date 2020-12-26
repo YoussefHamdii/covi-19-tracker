@@ -18,10 +18,9 @@ class App extends Component {
       countryco : [30.033, 31.23],
       countrynums: {cases: 0, deaths: 0 , recovered: 0},
       zoom: 3,
-      allcont: []
+      allcont: [],
+      casesType: "cases"
     }
-
-    
   }
 
   getCountrieFromApi = async ()=> {
@@ -62,7 +61,7 @@ class App extends Component {
 
   }
 
-  async componentDidMount(){
+  componentDidMount(){
     this.getCountrieFromApi();
   }
 
@@ -78,15 +77,15 @@ class App extends Component {
             </Select>
           </FormControl>
         </div>
-
+        {/* info boxes */}
         <div className="app__boxes">
-          <InfoBox type="Infected" cases={this.state.countrynums.cases} />
-          <InfoBox type="Deaths" cases={this.state.countrynums.deaths} />
-          <InfoBox type="Recovered" cases={this.state.countrynums.recovered} />
+          <InfoBox onClick={() => this.setState({casesType: "cases"})} type="Infected" cases={this.state.countrynums.cases} />
+          <InfoBox onClick={() => this.setState({casesType: "deaths"})} type="Deaths" cases={this.state.countrynums.deaths} />
+          <InfoBox onClick={() => this.setState({casesType: "recovered"})} type="Recovered" cases={this.state.countrynums.recovered} />
         </div>
         {/* MAP */}
 
-        <Map countries ={this.state.allcont} center={this.state.countryco} zoom ={this.state.zoom} />
+        <Map countries ={this.state.allcont} casesType={this.state.casesType} center={this.state.countryco} zoom ={this.state.zoom} />
         
       </div>
     );
